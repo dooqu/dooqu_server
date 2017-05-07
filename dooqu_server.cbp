@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="dooqu_server" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/dooqu_server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add directory="../dooqu_service/src" />
+					<Add directory="/home/jack/runtime/tinyxml" />
+					<Add directory="dooqu_service/src/service" />
+				</Compiler>
+				<Linker>
+					<Add option="-pthread" />
+					<Add option="-ldl" />
+					<Add option="-l:libdooqu_service.a" />
+					<Add option="-l:libtinyxml.a" />
+					<Add directory="/home/jack/cpp_proj/dooqu_service/bin/Debug" />
+					<Add directory="/home/jack/runtime/tinyxml" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/dooqu_server" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="dooqu_service/src/service" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<lib_finder disable_auto="1" />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

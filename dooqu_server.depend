@@ -1,14 +1,11 @@
 # depslib dependency file v1.0
-1493862757 source:/home/jack/cpp_proj/dooqu_server/src/main.cpp
+1494145147 source:/home/jack/cpp_proj/dooqu_server/src/main.cpp
 	<iostream>
-	<thread>
 	<map>
+	<cstring>
 	<dlfcn.h>
 	"tinyxml.h"
-	"service/game_service.h"
-	"service/game_plugin.h"
-	"util/utility.h"
-	"service/task_timer.h"
+	"dooqu_service.h"
 
 1305372298 /home/jack/runtime/tinyxml/tinyxml.h
 	<ctype.h>
@@ -25,7 +22,7 @@
 	<assert.h>
 	<string.h>
 
-1488865651 /home/jack/cpp_proj/dooqu_service/src/service/game_service.h
+1493870050 /home/jack/cpp_proj/dooqu_service/src/service/game_service.h
 	<set>
 	<queue>
 	<list>
@@ -56,9 +53,10 @@
 	"../util/tick_count.h"
 	"../util/utility.h"
 
-1493809501 /home/jack/cpp_proj/dooqu_service/src/net/tcp_client.h
+1494139279 /home/jack/cpp_proj/dooqu_service/src/net/tcp_client.h
 	<cstdarg>
 	<string>
+	<iostream>
 	<mutex>
 	<functional>
 	<boost/asio.hpp>
@@ -139,7 +137,7 @@
 	"../util/utility.h"
 	"../util/char_key_op.h"
 
-1489854323 /home/jack/cpp_proj/dooqu_service/src/service/game_zone.h
+1494139230 /home/jack/cpp_proj/dooqu_service/src/service/game_zone.h
 	<iostream>
 	<cstring>
 	<list>
@@ -154,7 +152,7 @@
 	"../util/tick_count.h"
 	"../util/utility.h"
 
-1489330082 /home/jack/cpp_proj/dooqu_service/src/service/task_timer.h
+1494142953 /home/jack/cpp_proj/dooqu_service/src/service/task_timer.h
 	<set>
 	<deque>
 	<mutex>
@@ -162,4 +160,9 @@
 	"boost/pool/singleton_pool.hpp"
 	"../util/tick_count.h"
 	"../util/utility.h"
+
+1494142164 /home/jack/cpp_proj/dooqu_service/src/dooqu_service.h
+	"service/game_service.h"
+	"service/game_plugin.h"
+	"service/task_timer.h"
 

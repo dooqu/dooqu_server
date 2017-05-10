@@ -17,7 +17,6 @@
 					<Add option="-fPIC" />
 					<Add directory="../dooqu_service/src" />
 					<Add directory="/home/jack/runtime/tinyxml" />
-					<Add directory="dooqu_service/src/service" />
 				</Compiler>
 				<Linker>
 					<Add option="-pthread" />

@@ -131,7 +131,7 @@ public:
 };
 
 
-void load_plugins_from_configs(game_service* service)
+void load_plugins_from_configs(game_service* service, std::vector<game_plugin*>& plugins)
 {
     TiXmlDocument xmlDoc("plugins.config");
 
@@ -189,11 +189,13 @@ void load_plugins_from_configs(game_service* service)
                 currAttrEle = currAttrEle->NextSiblingElement();
             }
 
-            game_plugin* plugin;
+            game_plugin* plugin = NULL;
             loader.create_plugin(service, plugin_id, plugin_name, frequence, capacity, &configs, &plugin);
 
             //delete plugin;
-            service->load_plugin(plugin, "zone0");
+            //service->load_plugin(plugin, "zone0");
+            if(plugin != NULL)
+            plugins.push_back(plugin);
             currInstanceEle = currInstanceEle->NextSiblingElement("instance");
         }
 
@@ -218,8 +220,15 @@ int main(int argc, char* argv[])
     {
         game_service service(8000);
 
-        load_plugins_from_configs(&service);
+        std::vector<game_plugin*> plugins;
+        load_plugins_from_configs(&service, plugins);
 
+        for(int i = 0;i < plugins.size(); i++)
+        {
+            service.load_plugin(plugins.at(i), "ddz_zone_0");
+        }
+        service.start();
+        service.stop();
         service.start();
 
 
@@ -233,15 +242,15 @@ int main(int argc, char* argv[])
             if (std::strcmp(read_line.c_str(), "onlines") == 0)
             {
                 printf("current onlines is:\n");
-                const std::map<const char*, game_plugin*, char_key_op>* plugins = service.get_plugins();
+                game_service::game_plugin_list* plugins = service.get_plugins();
 
-                std::map<const char*, game_plugin*, char_key_op>::const_iterator curr_plugin = plugins->begin();
+                game_service::game_plugin_list::const_iterator curr_plugin = plugins->begin();
 
                 int online_total = 0;
                 while (curr_plugin != plugins->end())
                 {
-                    online_total += curr_plugin->second->clients()->size();
-                    printf("current game {%s}, onlines=%d\n", curr_plugin->second->game_id(), curr_plugin->second->clients()->size());
+                    online_total += (*curr_plugin)->clients()->size();
+                    printf("current game {%s}, onlines=%d\n", (*curr_plugin)->game_id(), (*curr_plugin)->clients()->size());
                     ++curr_plugin;
                 }
                 printf("all plugins online total=%d\n", online_total);
@@ -283,7 +292,7 @@ int main(int argc, char* argv[])
             else if (std::strcmp(read_line.c_str(), "update") == 0)
             {
                 using namespace dooqu_service::service;
-
+//
                 async_task task(service.get_io_service());
                 tick_count* tick = new tick_count();
                 test_time test;
@@ -294,20 +303,13 @@ int main(int argc, char* argv[])
 //                service.tick_count_threads();
 //
 //                std::this_thread::sleep_for(std::chrono::milliseconds(10));
-//
-//                for (thread_status_map::iterator curr_thread_pair = service.threads_status()->begin();
-//                        curr_thread_pair != service.threads_status()->end();
-//                        ++curr_thread_pair)
-//                {
-//                    std::cout << "thread id " <<  (*curr_thread_pair).first << " " <<  (*curr_thread_pair).second->elapsed()<< std::endl;
-//                }
-//
-//                for (std::map<std::thread::id, char*>::iterator e = thread_status::messages.begin();
-//                        e != thread_status::messages.end();
-//                        ++e)
-//                {
-//                    std::cout << "thread id " << (*e).first << " " << (*e).second<< std::endl;
-//                }
+                //thread_lock_status thread_mutex_message;
+                for (thread_lock_status::iterator e = thread_status::instance()->status()->begin();
+                        e != thread_status::instance()->status()->end();
+                        ++e)
+                {
+                    std::cout << "thread id " << (*e).first << " " << (*e).second<< std::endl;
+                }
             }
             cin.clear();
             printf("please input the service command:\n");
@@ -319,15 +321,13 @@ int main(int argc, char* argv[])
             service.stop();
         }
 
-        const std::map<const char*, game_plugin*, char_key_op>* plugins = service.get_plugins();
-        std::map<const char*, game_plugin*, char_key_op>::const_iterator curr_plugin = plugins->begin();
-        while (curr_plugin != plugins->end())
+        for(int i = 0; i < plugins.size(); i++)
         {
-            delete curr_plugin->second;
-            curr_plugin++;
+            delete plugins.at(i);
         }
     }
 
+    delete thread_status::instance();
     printf("server object is recyled, press any key to exit.");
     getchar();
 

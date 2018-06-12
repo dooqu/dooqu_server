@@ -1,0 +1,6 @@
+cp ~/cpp_proj/dooqu_ddz/bin/Debug/libdooqu_ddz.so ~/cpp_proj/dooqu_server/
+cp ~/cpp_proj/dooqu_ddz/bin/Debug/libdooqu_ddz.so ~/cpp_proj/dooqu_server/bin/Debug/
+cp ~/cpp_proj/dooqu_ddz/bin/Debug/libdooqu_ddz.so ~/cpp_proj/ddz_robot/bin/Debug/
+
+cp ~/cpp_proj/dooqu_knowledge/bin/Debug/libdooqu_knowledge.so ~/cpp_proj/dooqu_server/
+cp ~/cpp_proj/dooqu_knowledge/bin/Debug/libdooqu_knowledge.so ~/cpp_proj/dooqu_server/bin/Debug/

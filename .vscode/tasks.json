@@ -1,0 +1,40 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build dooqu_server",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-fPIC",
+                "-Wall",
+                "-fpermissive",
+                "-std=c++11",
+                "${workspaceFolder}/src/main.cpp",
+                "-I/home/jack/cpp_proj/dooqu_service_ssl/src",
+                "-I/home/jack/runtime/tinyxml",
+                "-I/usr/local/ssl/include",
+                "-L/home/jack/cpp_proj/dooqu_service_ssl/bin/Debug",
+                "-L/home/jack/runtime/tinyxml",
+                "-o ${workspaceFolder}/bin/Debug/dooqu_server",
+                "-l:libdooqu_service_ssl.a",
+                "-l:libtinyxml.a",
+                "-pthread",
+                "-ldl"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true 
+            },
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
